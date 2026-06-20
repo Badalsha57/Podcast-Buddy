@@ -1,0 +1,29 @@
+{
+  "news_results": [
+    {
+      "position": 1,
+      "title": "AI startup announces new safety benchmark",
+      "source": { "name": "Tech Daily" },
+      "link": "https://example.com/ai-safety-benchmark",
+      "date": "06/13/2026, 09:00 AM, +0000 UTC",
+      "iso_date": "2026-06-13T09:00:00Z"
+    },
+    {
+      "position": 2,
+      "highlight": {
+        "title": "Regulators review rules for synthetic media labels",
+        "source": { "name": "Policy Wire" },
+        "link": "https://example.com/synthetic-media-labels",
+        "iso_date": "2026-06-13T08:30:00Z"
+      },
+      "stories": [
+        {
+          "title": "Platforms test clearer AI disclosure prompts",
+          "source": { "name": "Internet News" },
+          "link": "https://example.com/ai-disclosure-prompts",
+          "iso_date": "2026-06-13T08:00:00Z"
+        }
+      ]
+    }
+  ]
+}

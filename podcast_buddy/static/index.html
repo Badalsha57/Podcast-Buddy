@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Podcast Buddy</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <div>
+          <h1>Podcast Buddy</h1>
+          <p id="runStatus">Ready</p>
+        </div>
+        <div class="status-cluster" aria-live="polite">
+          <span class="status-pill" id="keyStatus">Checking key</span>
+          <span class="status-pill">Paid models: false</span>
+        </div>
+      </header>
+
+      <section class="workspace">
+        <form class="control-panel" id="episodeForm">
+          <label class="field wide">
+            <span>Topic</span>
+            <input
+              id="topic"
+              name="topic"
+              type="text"
+              value="AI regulation news"
+              autocomplete="off"
+              required
+            />
+          </label>
+
+          <div class="control-grid">
+            <label class="field">
+              <span>Results (Segments Count)</span>
+              <input
+                id="limit"
+                name="limit"
+                type="number"
+                min="1"
+                max="1000"
+                value="50"
+              />
+            </label>
+
+            <label class="field">
+              <span>Country</span>
+              <input
+                id="gl"
+                name="gl"
+                type="text"
+                value="us"
+                maxlength="8"
+              />
+            </label>
+
+            <label class="field">
+              <span>Language</span>
+              <input
+                id="hl"
+                name="hl"
+                type="text"
+                value="en"
+                maxlength="8"
+              />
+            </label>
+
+            <label class="field">
+              <span>Summary words</span>
+              <input
+                id="maxSummaryWords"
+                name="maxSummaryWords"
+                type="number"
+                min="40"
+                max="260"
+                value="160"
+              />
+            </label>
+          </div>
+
+          <fieldset class="field-set">
+            <legend>Summarizer</legend>
+            <div
+              class="segmented"
+              role="radiogroup"
+              aria-label="Summarizer"
+            >
+              <label>
+                <input
+                  type="radio"
+                  name="summarizer"
+                  value="auto"
+                  checked
+                />
+                <span>Auto</span>
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="summarizer"
+                  value="transformers"
+                />
+                <span>Local model</span>
+              </label>
+
+              <label>
+                <input
+                  type="radio"
+                  name="summarizer"
+                  value="extractive"
+                />
+                <span>Fast</span>
+              </label>
+            </div>
+          </fieldset>
+
+          <div class="control-grid">
+            <label class="field">
+              <span>Host A</span>
+              <input
+                id="hostAName"
+                name="hostAName"
+                type="text"
+                value="Aarav"
+              />
+            </label>
+
+            <label class="field">
+              <span>Host B</span>
+              <input
+                id="hostBName"
+                name="hostBName"
+                type="text"
+                value="Meera"
+              />
+            </label>
+          </div>
+
+          <label class="field wide">
+            <span>Model</span>
+            <input
+              id="summaryModel"
+              name="summaryModel"
+              type="text"
+              value="sshleifer/distilbart-cnn-12-6"
+              autocomplete="off"
+            />
+          </label>
+
+          <button
+            class="primary-action"
+            id="generateButton"
+            type="submit"
+          >
+            Generate episode
+          </button>
+
+          <div id="progressContainer" style="display: none; margin-top: 15px; border-top: 1px solid var(--line); padding-top: 12px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+              <span id="progressText" style="font-weight: bold; font-size: 13px;">Starting...</span>
+              <span id="progressPercentage" style="font-size: 13px; font-weight: bold; color: var(--teal);">0%</span>
+            </div>
+            <div class="progress-box">
+              <div id="progressBar" class="progress-fill"></div>
+            </div>
+          </div>
+        </form>
+
+        <section class="output-panel" aria-live="polite">
+
+          <div id="visualizerCard" class="visualizer-card">
+            <div id="visualizerHeader" class="visualizer-header">SIGNAL PROCESSING: IDLE</div>
+            <canvas id="waveCanvas" class="wave-canvas"></canvas>
+
+            <div class="audio-action-row">
+              <button type="button" id="playPodcast">▶ Play</button>
+              <button type="button" id="pausePodcast">⏸ Pause</button>
+              <button type="button" id="stopPodcast">⏹ Stop</button>
+              <button type="button" id="micButton">Ask Doubt</button>
+            </div>
+            <div id="voiceStatus">Ready</div>
+          </div>
+
+          <div
+            class="tabs"
+            role="tablist"
+            aria-label="Output views"
+          >
+            <button
+              class="tab active"
+              type="button"
+              data-tab="conversation"
+              role="tab"
+              aria-selected="true"
+            >
+              Conversation
+            </button>
+
+            <button
+              class="tab"
+              type="button"
+              data-tab="summary"
+              role="tab"
+              aria-selected="false"
+            >
+              Summary
+            </button>
+
+            <button
+              class="tab"
+              type="button"
+              data-tab="sources"
+              role="tab"
+              aria-selected="false"
+            >
+              Sources
+            </button>
+
+            <button
+              class="tab"
+              type="button"
+              data-tab="files"
+              role="tab"
+              aria-selected="false"
+            >
+              Files
+            </button>
+          </div>
+
+          <div class="result-meta" id="resultMeta">
+            <span>Summarizer: pending</span>
+            <span>Model: pending</span>
+          </div>
+
+          <div
+            class="viewer"
+            id="conversationView"
+            data-view="conversation"
+          >
+            <pre id="conversationOutput">Generate an episode to preview the conversation.</pre>
+          </div>
+
+          <div
+            class="viewer hidden"
+            id="summaryView"
+            data-view="summary"
+          >
+            <pre id="summaryOutput">Generate an episode to preview the summary.</pre>
+          </div>
+
+          <div
+            class="viewer hidden"
+            id="sourcesView"
+            data-view="sources"
+          >
+            <div
+              class="source-table"
+              id="sourcesOutput"
+            ></div>
+          </div>
+
+          <div
+            class="viewer hidden"
+            id="filesView"
+            data-view="files"
+          >
+            <dl
+              class="file-list"
+              id="filesOutput"
+            ></dl>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js" defer></script>
+  </body>
+</html>
