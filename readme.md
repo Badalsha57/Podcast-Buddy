@@ -4,7 +4,7 @@
 
 ---
 
-## 🚀 Tech Stack
+##  Tech Stack
 
 This project leverages a modern and efficient technology stack for local execution and fast performance.
 
@@ -33,7 +33,7 @@ This project leverages a modern and efficient technology stack for local executi
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 * Automated news collection from Google News
 * AI-powered news summarization
@@ -47,7 +47,7 @@ This project leverages a modern and efficient technology stack for local executi
 
 ---
 
-## 📂 Project Structure
+##  Project Structure
 
 ```text
 podcast-buddy/
@@ -73,7 +73,7 @@ podcast-buddy/
 
 ---
 
-## 🛠️ Getting Started
+##  Getting Started
 
 ### Prerequisites
 
@@ -86,7 +86,7 @@ https://serpapi.com/
 
 ---
 
-## 📥 Installation
+##  Installation
 
 ### Clone the Repository
 
@@ -122,7 +122,7 @@ SERPAPI_KEY=your_api_key_here
 
 ---
 
-## ▶️ Run the Application
+##  Run the Application
 
 ```powershell
 python -m podcast_buddy
@@ -142,7 +142,7 @@ http://localhost:8000
 
 ---
 
-## 🎙️ How It Works
+##  How It Works
 
 1. Fetches real-time news using SerpAPI.
 2. Summarizes articles using DistilBART.
@@ -152,7 +152,7 @@ http://localhost:8000
 
 ---
 
-## 🔒 Privacy
+##  Privacy
 
 Podcast Buddy is designed with a local-first philosophy.
 
@@ -163,7 +163,7 @@ Podcast Buddy is designed with a local-first philosophy.
 
 ---
 
-## 🧪 Running Tests
+##  Running Tests
 
 ```powershell
 pytest
@@ -181,7 +181,7 @@ pytest
 
 ---
 
-## 🤝 Contributing
+##  Contributing
 
 Contributions, issues, and feature requests are welcome.
 
@@ -193,13 +193,13 @@ Contributions, issues, and feature requests are welcome.
 
 ---
 
-## 📄 License
+##  License
 
 This project is released under the MIT License.
 
 ---
 
-## 👨‍💻 Author
+##  Author
 
 **Badal Kumar Sharma**
 
